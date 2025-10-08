@@ -1,11 +1,8 @@
-// src/fmt.rs (เวอร์ชั่นตรวจสอบ Filter)
-
 use anyhow::Result;
 use std::fs;
 use std::path::Path;
 use walkdir::{DirEntry, WalkDir};
 
-// --- Import ทั้งหมดเหมือนเดิม ---
 use dprint_plugin_typescript::configuration::Configuration as TypeScriptConfiguration;
 use dprint_plugin_typescript::configuration::ConfigurationBuilder as TypeScriptConfigurationBuilder;
 use dprint_plugin_typescript::FormatTextOptions;
@@ -21,12 +18,8 @@ pub fn format_project_programmatically(start_path: &str) -> Result<()> {
     let walker = WalkDir::new(start_path)
         .into_iter()
         .filter_entry(|entry| {
-            // --- เพิ่ม Log เพื่อดูการตัดสินใจของ Filter ---
             let is_skipped = is_skipped_dir(entry);
             println!("[FILTER] Evaluating: {:?}. -> Should Skip? {}", entry.path(), is_skipped);
-            // คืนค่า !is_skipped เพื่อให้ filter ทำงาน
-            // ถ้า is_skipped เป็น true, !true คือ false -> กรองออก
-            // ถ้า is_skipped เป็น false, !false คือ true -> เก็บไว้
             !is_skipped
         });
 
@@ -57,7 +50,6 @@ fn is_skipped_dir(entry: &DirEntry) -> bool {
          .unwrap_or(false)
 }
 
-// แก้ไข fmt_file_helper เล็กน้อยให้คืนค่า bool (true ถ้ามีการ format)
 fn fmt_file_helper(path_str: &str) -> Result<bool> {
     let file_path = Path::new(path_str);
     let original_content = match fs::read_to_string(file_path) {
@@ -92,8 +84,8 @@ fn fmt_file_helper(path_str: &str) -> Result<bool> {
         if formatted != original_content {
             fs::write(file_path, formatted)?;
             println!("Formatted: {}", path_str);
-            return Ok(true); // คืนค่า true เพราะมีการ format เกิดขึ้น
+            return Ok(true);
         }
     }
-    Ok(false) // คืนค่า false ถ้าไม่มีการ format
+    Ok(false)
 }

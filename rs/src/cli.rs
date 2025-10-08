@@ -4,14 +4,14 @@ pub fn get_cli_args() -> clap::ArgMatches {
     Command::new("dose")
         .version("1.0")
         .about("🚀 Dose3 Starter Kit CLI")
-        .subcommand_required(true) // <--- เพิ่มบรรทัดนี้
-        .arg_required_else_help(true) // <--- เพิ่มบรรทัดนี้ด้วยจะดีมาก
-        .disable_version_flag(true) // 1. ปิด flag --version/-V อัตโนมัติ
-        .arg(                       // 2. สร้าง flag ของเราเอง
+        .subcommand_required(true)
+        .arg_required_else_help(true)
+        .disable_version_flag(true)
+        .arg(
             Arg::new("version")
-                .short('v') // 3. กำหนดให้ใช้ -v (ตัวพิมพ์เล็ก)
+                .short('v') 
                 .long("version")
-                .action(ArgAction::Version) // 4. บอกว่า action ของ flag นี้คือการแสดงเวอร์ชั่น
+                .action(ArgAction::Version) 
                 .help("Prints version information")
         )
         .subcommand(
