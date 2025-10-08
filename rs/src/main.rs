@@ -73,7 +73,7 @@ async fn main() {
             eprintln!("❌ Framework not found!");
         }
     }
-    _ => {} // ถ้าไม่ใส่ subcommand ก็รันแบบปกติ
+    _ => {}
     }
 
 }
