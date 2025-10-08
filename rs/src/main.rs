@@ -8,7 +8,7 @@ mod port;
 mod status;
 mod deps;
 mod fmt;
-
+mod updater;
 #[tokio::main]
 async fn main() {
     let matches = cli::get_cli_args();
@@ -28,6 +28,10 @@ async fn main() {
     }
     Some(("scan", _)) => {
         port::async_scan_ports(1, 65535).await;
+        return;
+    }
+    Some(("update", _)) => {
+        updater::check_and_apply_updates();
         return;
     }
     Some(("kill", sub_m)) => {

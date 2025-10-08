@@ -23,6 +23,10 @@ pub fn get_cli_args() -> clap::ArgMatches {
                 .about("🔍 Check if Git and Node.js are installed"),
         )
         .subcommand(
+            Command::new("update")
+                .about("🔄 Update dose3 cli"),
+        )
+        .subcommand(
             Command::new("ls")
                 .about("📂 List files in the current directory"),
         )
