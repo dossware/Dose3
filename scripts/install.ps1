@@ -48,6 +48,10 @@ try {
     $NewFilePath = Join-Path $BinPath $EXE_NAME
     if (Test-Path $OldFilePath) {
         Write-Host "Renaming $OLD_EXE_NAME to $EXE_NAME..."
+        # Remove existing dose.exe if it exists
+        if (Test-Path $NewFilePath) {
+            Remove-Item $NewFilePath -Force
+        }
         Rename-Item -Path $OldFilePath -NewName $EXE_NAME
         Write-Host-Color "Rename successful." -Color Green
     }
